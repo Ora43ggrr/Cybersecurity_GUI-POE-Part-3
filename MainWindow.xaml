@@ -1,0 +1,182 @@
+﻿<Window x:Class="Cybersecurity_GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Cybersecurity Awareness Chatbot"
+        Height="600"
+        Width="850"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF252526">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="SecondaryBackground" Color="#FF1E1E1E"/>
+        <SolidColorBrush x:Key="ChatbotTextColor" Color="#FF00DC82"/>
+        <SolidColorBrush x:Key="UserTextColor" Color="White"/>
+        <SolidColorBrush x:Key="BorderColor" Color="#FF00DC82"/>
+        <SolidColorBrush x:Key="ErrorColor" Color="#FFFF6B6B"/>
+
+        <DropShadowEffect x:Key="DropShadowEffect"
+                          Color="Black"
+                          BlurRadius="10"
+                          ShadowDepth="2"
+                          Opacity="0.5" />
+
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF3F3F46"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF3F3F46"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#FF2F2F36"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="{StaticResource SecondaryBackground}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FF3F3F46"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0"
+                Background="#FF252526"
+                Margin="10"
+                Padding="10"
+                Effect="{StaticResource DropShadowEffect}">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="LogoImage" Width="100" Height="40" Stretch="Uniform" Margin="0,0,10,0"/>
+                <TextBlock Text="Cybersecurity Awareness Chatbot"
+                           FontSize="22"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center"
+                           Foreground="{StaticResource ChatbotTextColor}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid x:Name="MainContentArea" Grid.Row="1">
+            <!-- Greeting View -->
+            <StackPanel x:Name="GreetingView"
+                        Visibility="Visible"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Margin="20"
+                        Width="300">
+                <TextBlock Text="Welcome to Cybersecurity Chatbot"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource ChatbotTextColor}"
+                           TextAlignment="Center"/>
+                <TextBlock Text="Please enter your name:"
+                           Foreground="{StaticResource ChatbotTextColor}"
+                           Margin="0,15,0,5"/>
+                <TextBox x:Name="UserNameInput" Width="260"/>
+                <Button x:Name="SubmitNameButton"
+                        Content="Continue"
+                        HorizontalAlignment="Right"
+                        Click="SubmitNameButton_Click"/>
+            </StackPanel>
+
+            <!-- Menu View -->
+            <Grid x:Name="MenuView" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="15">
+                    <TextBlock x:Name="WelcomeMessage"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource ChatbotTextColor}"
+                               Margin="0,0,0,10"/>
+                    <UniformGrid Columns="1" Rows="6" Margin="0,5">
+                        <Button x:Name="AskQuestionsBtn"
+                                Content="1. Ask ChatBot Questions"
+                                Click="AskQuestionsBtn_Click"/>
+                        <Button x:Name="TaskManagementBtn"
+                                Content="2. Task Management"
+                                Click="TaskManagementBtn_Click"/>
+                        <Button x:Name="QuizBtn"
+                                Content="3. Take Cybersecurity Quiz"
+                                Click="QuizBtn_Click"/>
+                        <Button x:Name="ViewHistoryBtn"
+                                Content="4. View Conversation History"
+                                Click="ViewHistoryBtn_Click"/>
+                        <Button x:Name="ActivityLogBtn"
+                                Content="5. View Activity Log"
+                                Click="ActivityLogBtn_Click"/>
+                        <Button x:Name="ExitBtn"
+                                Content="6. Close"
+                                Background="#FFA61A1A"
+                                Click="ExitBtn_Click"/>
+                    </UniformGrid>
+                    <TextBlock x:Name="UserNameDisplay"
+                               Foreground="White"
+                               Margin="0,20,0,0"/>
+                </StackPanel>
+
+                <ScrollViewer x:Name="ContentView"
+                              Grid.Column="1"
+                              Background="{StaticResource SecondaryBackground}"
+                              Margin="10">
+                    <StackPanel x:Name="ContentPanel" Margin="5"/>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="2" Background="#FF252526" Margin="5" Padding="5">
+            <DockPanel LastChildFill="True">
+                <TextBlock x:Name="StatusText"
+                           Foreground="White"
+                           FontSize="12"
+                           DockPanel.Dock="Left"
+                           Text="Ready"/>
+                <TextBlock x:Name="CurrentTimeText"
+                           Foreground="White"
+                           FontSize="12"
+                           DockPanel.Dock="Right"
+                           Margin="10,0,0,0"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>
